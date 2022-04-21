@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'coin_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
+import 'GetData.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -10,7 +11,19 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   String? setCurrency;
-
+  String? data;
+  String? bitcoinValue;
+  void  update( ) async{
+      data = await FetchData().getData('USD');
+      setState(() {
+        bitcoinValue = data.toString();
+      });
+  }
+  @override
+  void initState(){
+    super.initState();
+    update();
+  }
   DropdownButton<String> getDropdownButton() {
     List<DropdownMenuItem<String>> dropdownItems = [];
     // for (int i = 0; i < currenciesList.length; i++) {
@@ -67,11 +80,13 @@ class _PriceScreenState extends State<PriceScreen> {
               elevation: 5.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
+
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? USD',
+
+                  '1 BTC = $data USD',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
