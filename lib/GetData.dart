@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'constants_url.dart';
 
 class FetchData {
-  Future<dynamic> getData(String selectedCurrency) async {
+  Future<dynamic> getData(String bitcoin,String selectedCurrency) async {
     http.Response response = await http
-        .get(Uri.parse('$coinAPIURL/BTC/$selectedCurrency?apikey=$apiKey'));
+        .get(Uri.parse('$coinAPIURL/$bitcoin/$selectedCurrency?apikey=$apiKey'));
     try {
       if (response.statusCode == 200) {
         String data = response.body;
