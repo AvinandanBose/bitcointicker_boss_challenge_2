@@ -12,43 +12,26 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String? setCurrency;
   String? data;
-  String? data1;
-  String? data2;
   String bitcoinValue = '?';
-  String bitcoinValue1 = '?';
-  String bitcoinValue2 = '?';
+  // String? data1;
+  // String? data2;
+  // String bitcoinValue1 = '?';
+  // String bitcoinValue2 = '?';
 
   void update() async {
-    data = await FetchData().getData('BTC', 'USD');
-    //data1 = await FetchData().getData('ETH', 'USD');
-    //data2 = await FetchData().getData('LTC', 'USD');
+    data = await FetchData().getData( 'USD');
     setState(() {
       bitcoinValue = data.toString();
-      //bitcoinValue1 = data1.toString();
-      //bitcoinValue2 = data2.toString();
     });
   }
 
-  void update1() async {
-    data1 = await FetchData().getData('ETH', 'USD');
-    setState(() {
-      bitcoinValue1 = data1.toString();
-    });
-  }
 
-  void update2() async {
-    data2 = await FetchData().getData('LTC', 'USD');
-    setState(() {
-      bitcoinValue2 = data2.toString();
-    });
-  }
 
   @override
   void initState() {
     super.initState();
     update();
-    update1();
-    update2();
+
   }
 
   DropdownButton<String> getDropdownButton() {
@@ -124,44 +107,44 @@ class _PriceScreenState extends State<PriceScreen> {
                     ),
                   ),
                 ),
-                Card(
-                  color: Colors.lightBlueAccent,
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                    child: Text(
-                      '1 ETH = $bitcoinValue1 USD',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                Card(
-                  color: Colors.lightBlueAccent,
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                    child: Text(
-                      '1 LTC = $bitcoinValue2 USD',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+                // Card(
+                //   color: Colors.lightBlueAccent,
+                //   elevation: 5.0,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(10.0),
+                //   ),
+                //   child: Padding(
+                //     padding:
+                //         EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                //     child: Text(
+                //       '1 ETH = $bitcoinValue1 USD',
+                //       textAlign: TextAlign.center,
+                //       style: TextStyle(
+                //         fontSize: 20.0,
+                //         color: Colors.white,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Card(
+                //   color: Colors.lightBlueAccent,
+                //   elevation: 5.0,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(10.0),
+                //   ),
+                //   child: Padding(
+                //     padding:
+                //         EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                //     child: Text(
+                //       '1 LTC = $bitcoinValue2 USD',
+                //       textAlign: TextAlign.center,
+                //       style: TextStyle(
+                //         fontSize: 20.0,
+                //         color: Colors.white,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
