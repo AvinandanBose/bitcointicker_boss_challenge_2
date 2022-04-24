@@ -11,26 +11,31 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   String? setCurrency;
-  String? data;
+  dynamic data;
   String bitcoinValue = '?';
+  List<String> list = [];
   // String? data1;
   // String? data2;
   // String bitcoinValue1 = '?';
   // String bitcoinValue2 = '?';
-
+  Map<String, String> coinValues = {};
   void update() async {
     data = await FetchData().getData( 'USD');
     setState(() {
-      bitcoinValue = data.toString();
+      coinValues = data;
+      for ( var key in coinValues.keys){
+        list.add(key);
+      }
+
     });
   }
-
 
 
   @override
   void initState() {
     super.initState();
     update();
+
 
   }
 
@@ -98,7 +103,7 @@ class _PriceScreenState extends State<PriceScreen> {
                     padding:
                         EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                     child: Text(
-                      '1 BTC = $bitcoinValue USD',
+                      ' ${coinValues.keys.first} = ${coinValues.values.first} USD',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20.0,
@@ -107,44 +112,44 @@ class _PriceScreenState extends State<PriceScreen> {
                     ),
                   ),
                 ),
-                // Card(
-                //   color: Colors.lightBlueAccent,
-                //   elevation: 5.0,
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(10.0),
-                //   ),
-                //   child: Padding(
-                //     padding:
-                //         EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                //     child: Text(
-                //       '1 ETH = $bitcoinValue1 USD',
-                //       textAlign: TextAlign.center,
-                //       style: TextStyle(
-                //         fontSize: 20.0,
-                //         color: Colors.white,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // Card(
-                //   color: Colors.lightBlueAccent,
-                //   elevation: 5.0,
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.circular(10.0),
-                //   ),
-                //   child: Padding(
-                //     padding:
-                //         EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                //     child: Text(
-                //       '1 LTC = $bitcoinValue2 USD',
-                //       textAlign: TextAlign.center,
-                //       style: TextStyle(
-                //         fontSize: 20.0,
-                //         color: Colors.white,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                Card(
+                  color: Colors.lightBlueAccent,
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                    child: Text(
+                      '${coinValues.keys.last} = ${coinValues['LTC']} USD',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  color: Colors.lightBlueAccent,
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                    child: Text(
+                      '${list[1] } = ${coinValues['ETH']} USD',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
