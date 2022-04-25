@@ -14,6 +14,7 @@ class _PriceScreenState extends State<PriceScreen> {
   dynamic data;
   String bitcoinValue = '?';
   List<String> list = [];
+  List<String> list2 = [];
   // String? data1;
   // String? data2;
   // String bitcoinValue1 = '?';
@@ -26,6 +27,9 @@ class _PriceScreenState extends State<PriceScreen> {
       for (var key in coinValues.keys) {
         list.add(key);
       }
+      for (var values  in coinValues.values) {
+        list2.add(values);
+      }
     });
   }
 
@@ -36,15 +40,15 @@ class _PriceScreenState extends State<PriceScreen> {
   }
   Column makeCards() {
     List<CryptoCard> cryptoCards = [];
-
+    for (int  i=0 ;i<cryptoList.length;i++) {
       cryptoCards.add(
         CryptoCard(
-          cryptoCurrency: coinValues.keys.first,
-          selectedCurrency: coinValues.values.first,
+          cryptoCurrency: list[i],
+          selectedCurrency: list2[i],
           value: 'USD',
         ),
       );
-
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: cryptoCards,
