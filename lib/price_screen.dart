@@ -10,49 +10,27 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  String? setCurrency;
-  dynamic data;
+  String setCurrency ='Select Currency';
   String bitcoinValue = '?';
-  List<String> list = [];
-  List<String> list2 = [];
-  // String? data1;
-  // String? data2;
-  // String bitcoinValue1 = '?';
-  // String bitcoinValue2 = '?';
+  dynamic data;
   Map<String, String> coinValues = {};
+  bool isWaiting = false;
+
   void update() async {
-    data = await FetchData().getData('USD');
-    setState(() {
-      coinValues = data;
-      for (var key in coinValues.keys) {
-        list.add(key);
-      }
-      for (var values  in coinValues.values) {
-        list2.add(values);
-      }
-    });
+    isWaiting = true;
+    if(isWaiting == true){
+      dynamic  data = await FetchData().getData(setCurrency);
+      setState(() {
+        coinValues = data;
+      });
+    }
+    isWaiting = false;
   }
 
   @override
   void initState() {
     super.initState();
     update();
-  }
-  Column makeCards() {
-    List<CryptoCard> cryptoCards = [];
-    for (int  i=0 ;i<cryptoList.length;i++) {
-      cryptoCards.add(
-        CryptoCard(
-          cryptoCurrency: list[i],
-          selectedCurrency: list2[i],
-          value: 'USD',
-        ),
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: cryptoCards,
-    );
   }
 
   DropdownButton<String> getDropdownButton() {
@@ -72,7 +50,7 @@ class _PriceScreenState extends State<PriceScreen> {
       onChanged: (value) {
         setState(() {
           setCurrency = value!;
-          print(value);
+          update();
         });
       },
     );
@@ -87,9 +65,26 @@ class _PriceScreenState extends State<PriceScreen> {
       backgroundColor: Colors.lightBlue,
       itemExtent: 32.0,
       onSelectedItemChanged: (selectedItem) {
-        print(selectedItem);
+        update();
       },
       children: pickerItems,
+    );
+  }
+
+  Column makeCards() {
+    List<CryptoCard> cryptoCards = [];
+    for (String cryptocurrencies in cryptoList) {
+      cryptoCards.add(
+        CryptoCard(
+          cryptoCurrency: cryptocurrencies,
+          selectedCurrency: setCurrency,
+          value: isWaiting ? bitcoinValue  : coinValues[cryptocurrencies],
+        ),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: cryptoCards,
     );
   }
 
@@ -104,15 +99,7 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                makeCards(),
-              ],
-            ),
-          ),
+          makeCards(),
           Container(
             height: 150.0,
             alignment: Alignment.center,
@@ -126,10 +113,11 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 }
 
+
 class CryptoCard extends StatelessWidget {
-  final String value;
-  final dynamic selectedCurrency;
-  final dynamic cryptoCurrency;
+  final dynamic value;
+  final String selectedCurrency;
+  final String cryptoCurrency;
   const CryptoCard({
     Key? key,
     required this.value,

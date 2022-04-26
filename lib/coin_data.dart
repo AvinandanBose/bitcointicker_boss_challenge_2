@@ -1,4 +1,5 @@
  const List<String> currenciesList = [
+   'Select Currency',
   'AUD',
   'BRL',
   'CAD',
@@ -26,6 +27,6 @@ const List<String> cryptoList = [
   'BTC',
   'ETH',
   'LTC',
+  'DOGE',
 ];
-
 
