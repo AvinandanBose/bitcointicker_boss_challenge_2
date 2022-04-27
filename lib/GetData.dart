@@ -9,19 +9,18 @@ class FetchData {
     for (String crypto in cryptoList) {
       http.Response response = await http.get(
           Uri.parse('$coinAPIURL/$crypto/$selectedCurrency?apikey=$apiKey'));
-      try {
+
         if (response.statusCode == 200) {
           String data = response.body;
           dynamic decodeData = jsonDecode(data);
           rate = decodeData['rate'];
           cryptoPrices[crypto] = rate.toStringAsFixed(2);
         }
-      } catch (e) {
-        print(response.statusCode);
-        print(e);
-        rethrow;
+        else{
+          print(response.statusCode);
+          throw 'Problem with the get request';
+        }
       }
-    }
     print(cryptoPrices);
     return cryptoPrices;
   }

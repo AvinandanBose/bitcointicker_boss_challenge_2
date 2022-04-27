@@ -19,7 +19,7 @@ class _PriceScreenState extends State<PriceScreen> {
   void update() async {
     isWaiting = true;
     if(isWaiting == true){
-      dynamic  data = await FetchData().getData(setCurrency);
+       data = await FetchData().getData(setCurrency);
       setState(() {
         coinValues = data;
       });
