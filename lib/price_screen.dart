@@ -15,16 +15,18 @@ class _PriceScreenState extends State<PriceScreen> {
   dynamic data;
   Map<String, String> coinValues = {};
   bool isWaiting = false;
-
   void update() async {
     isWaiting = true;
-    if(isWaiting == true){
+    try {
        data = await FetchData().getData(setCurrency);
-      setState(() {
+       isWaiting = false;
+       setState(() {
         coinValues = data;
       });
     }
-    isWaiting = false;
+    catch (e) {
+      print(e);
+    }
   }
 
   @override
